@@ -29,9 +29,22 @@ The contracts used in:
 
 ```bash
 git clone https://github.com/AlejandroDura/mansatrade-skill-test.git
-cd hardhat
+```
+```bash
+cd mansatrade-skill-test
 ```
 
+- Install dependencies
+
+```bash
+npm install
+```
+
+- Compile project
+
+```bash
+npx hardhat compile
+```
 - Start a hardhat node in a new terminal
 
 ```bash
