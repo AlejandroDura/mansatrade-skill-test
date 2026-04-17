@@ -1,57 +1,59 @@
-# Sample Hardhat 3 Beta Project (`node:test` and `viem`)
+# MansaTrade Skill Test
 
-This project showcases a Hardhat 3 Beta project using the native Node.js test runner (`node:test`) and the `viem` library for Ethereum interactions.
+## 📄 Description
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+This project consists of a skill test performed to the MansaTrade smart contract.
 
-## Project Overview
+## 🎯 Objectives
 
-This example project includes:
+Perform a unit test to the createOffer function using hardhat.
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using [`node:test`](nodejs.org/api/test.html), the new Node.js native test runner, and [`viem`](https://viem.sh/).
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+## 🗂️ Project structure
 
-## Usage
+The test can be found in:
 
-### Running Tests
+- test/MansatradeTest.ts
 
-To run all the tests in the project, execute the following command:
+The contracts used in:
 
-```shell
-npx hardhat test
+- contracts/Mocks
+- contracts/mansatrade.sol
+
+## 🛠️ Thech Stack
+
+- Solidity
+- Hardhat3 + Viem
+
+## ▶️ How to Run
+- Clone the repository
+
+```bash
+git clone https://github.com/AlejandroDura/mansatrade-skill-test.git
+```
+```bash
+cd mansatrade-skill-test
 ```
 
-You can also selectively run the Solidity or `node:test` tests:
+- Install dependencies
 
-```shell
-npx hardhat test solidity
-npx hardhat test nodejs
+```bash
+npm install
 ```
 
-### Make a deployment to Sepolia
+- Compile project
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
+```bash
+npx hardhat compile
+```
+- Start a hardhat node in a new terminal
 
-To run the deployment to a local chain:
-
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
+```bash
+npx hardhat node
 ```
 
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
+- Run the test
 
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
-
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
-
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
+```bash
+npx hardhat test test/MansatradeTest.ts
 ```
 
-After setting the variable, you can run the deployment with the Sepolia network:
-
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
-```
