@@ -46,6 +46,7 @@ describe("MansaTrade", () => {
 
         const [deployer, user_fir_div, user_sec_div] = await client.getAddresses();
 
+        //-----DEPLOY MANSATRADA CONTRACT-----///
         const hash = await client.deployContract({
             account: deployer,
             abi: MansaTrade.abi,
@@ -54,13 +55,13 @@ describe("MansaTrade", () => {
         });
 
         const receipt = await client.waitForTransactionReceipt({ hash });
-
         if (!receipt.contractAddress) {
             throw new Error("Contract deployment failed: no address");
         }
 
         const mansatrade_address = receipt.contractAddress;
 
+        //------READ CONSTRUCTOR INITIALIZED DATA-------//
         const current_fir_div = await client.readContract({
             address: mansatrade_address,
             abi: MansaTrade.abi,
@@ -105,7 +106,6 @@ describe("MansaTrade", () => {
         });
 
         const receipt = await client.waitForTransactionReceipt({ hash });
-
         if (!receipt.contractAddress) {
             throw new Error("Contract deployment failed: no address");
         }
@@ -131,7 +131,7 @@ describe("MansaTrade", () => {
         console.log("Token deployed at:", token_address);
 
 
-        //-----CREATE OFFER-----//
+        //-----GET DEPLOYED CONTRACTS-----//
         const token = getContract({
             address: token_address,
             abi: ERC20Mock.abi,
@@ -144,7 +144,15 @@ describe("MansaTrade", () => {
             client,
         });
 
+        //-----CREATE OFFER-----//
+
         //Set expected offer values
+
+        /**
+         * @note For now, I dont know the purpose of some of these variables. That`s why I filled them
+         * with generic values.
+         */
+        const expected_token_address = token.address;
         const expected_fiat = "Dollar"
         const expected_rate = "Rate"
         const expected_payment_options = "bank transfer"
@@ -161,7 +169,7 @@ describe("MansaTrade", () => {
         const expected_status = true;
 
         //Create new offer
-        const create_offer_hash = await mansaTrade.write.createOffer([token.address, expected_fiat, expected_rate, expected_payment_options, expected_public_key, expected_offer_terms, expected_time_limit, expected_eth, expected_token_amount, expected_min_limit, expected_max_limit],
+        const create_offer_hash = await mansaTrade.write.createOffer([expected_token_address, expected_fiat, expected_rate, expected_payment_options, expected_public_key, expected_offer_terms, expected_time_limit, expected_eth, expected_token_amount, expected_min_limit, expected_max_limit],
             { account: user_offer, });
 
         const create_offer_receipt = await client.waitForTransactionReceipt({ hash: create_offer_hash });
@@ -189,7 +197,7 @@ describe("MansaTrade", () => {
 
         //Assert offer info
         assert.equal(offer.owner, user_offer);
-        assert.equal(offer.token_address.toLocaleUpperCase, token.address.toLocaleUpperCase);
+        assert.equal(offer.token_address.toLocaleUpperCase, expected_token_address.toLocaleUpperCase);
         assert.equal(offer.fiat, expected_fiat);
         assert.equal(offer.rate, expected_rate);
         assert.equal(offer.payment_options, expected_payment_options);
